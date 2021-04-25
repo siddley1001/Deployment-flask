@@ -18,11 +18,28 @@
 
      <!-- Main Input For Receiving Query to our ML -->
     <form action="{{ url_for('predict')}}"method="post">
-    	<input type="text" name="experience" placeholder="Experience" required="required" />
-        <input type="text" name="test_score" placeholder="Test Score" required="required" />
-		<input type="text" name="interview_score" placeholder="Interview Score" required="required" />
+    	<input type="text" name="age" placeholder="Age" required="required" />
+        <input type="text" name="hypertension" placeholder="HyperTension (Y/N)" required="required" />
+		<input type="text" name="heart_disease" placeholder="Heart Disease (Y/N)" required="required" />
+		<input type="text" name="married" placeholder="Ever Married (Y/N)" required="required" />
+        <input type="text" name="avg_glucose_lvl" placeholder="Avg Glucose Level" required="required" />
+        <input type="text" name="ln_glucose" placeholder="ln(Avg Glucose Level)" required="required" />
 
-        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+        <input type="text" name="bmi" placeholder="BMI" required="required" />
+        <input type="text" name="ln_bmi" placeholder="ln(BMI)" required="required" />
+
+        <input type="text" name="male" placeholder="Is Male? (Y/N)" required="required" />
+        <input type="text" name="worked_never" placeholder="Never_worked? (Y/N)" required="required" />
+		<input type="text" name="worked_priv" placeholder="Worked Private? (Y/N)" required="required" />
+        <input type="text" name="worked_self" placeholder="Self-Employed? (Y/N)" required="required" />
+        <input type="text" name="child" placeholder="Children" required="required" />
+        <input type="text" name="urban" placeholder="Is Urban? (Y/N)" required="required" />
+
+		<input type="text" name="smoke_ever" placeholder="Smoked Before? (Y/N)" required="required" />
+		<input type="text" name="smoke_never" placeholder="Never Smoked? (Y/N)" required="required" />
+		<input type="text" name="smoke_still" placeholder="Still Smokes? (Y/N)" required="required" />
+
+        <button type="submit" class="btn btn-primary btn-block btn-large">Predict Stroke</button>
     </form>
 
    <br>
