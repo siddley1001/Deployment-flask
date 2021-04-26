@@ -1,9 +1,14 @@
 import numpy as np
-from flask import Flask, request, jsonify, render_template
-import pickle
+from flask import Flask, request, render_template
+from xgboost import XGBClassifier, Booster
+
+bst = Booster()
 
 app = Flask(__name__)
-model = pickle.load(open('xgbc_model.pkl', 'rb'))
+model = XGBClassifier()
+dirr = '/Users/vanamsid/Deployment-flask/'
+model.load_model(dirr + 'xgbc_model.json')
+
 
 
 @app.route('/')
@@ -18,23 +23,27 @@ def predict():
     for x in request.form.values():
         if x == 'Y':
             x = 1
+            # inputs.append(x)
         elif x == 'N':
             x = 0
+            # inputs.append(x)
         else:
-            x = int(x)
-        inputs.append(x)
+            x = float(x)
+            # inputs.append(x)
+    inputs = [x for x in request.form.values()]
+    inputs = np.array(inputs)
+    # final_inputs = [np.array(inputs)]
+    output = model.predict(inputs)
 
-    final_inputs = [np.array(inputs)]
-    prediction = model.predict(final_inputs)
-
-    output = prediction[0]
+    # output = np.array(output)
+    # output = np.array(float(output))
 
     if output == 1:
         return render_template('index.html', prediction_text='Individual WILL have a stroke'
                                                              '\n Note that the following model predicts strokes with '
                                                              '96% '
                                                              'accuracy')
-    else:
+    elif output == 0:
         return render_template('index.html', prediction_text='Individual will NOT have a stroke'
                                                              '\n Note that the following model predicts strokes with '
                                                              '96% '

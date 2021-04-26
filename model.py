@@ -1,11 +1,12 @@
 # Importing the libraries
 import numpy as np
 import pandas as pd
-import pickle
+import joblib
 from imblearn.over_sampling import SMOTE
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import recall_score
 from xgboost import XGBClassifier
+import os
 
 dataset = pd.read_csv('healthcare-dataset-stroke-data.csv')
 dataset.dropna(axis=0, inplace=True)
@@ -68,8 +69,10 @@ X_train = np.concatenate([X_train, X_valid], axis=0)
 y_train = np.concatenate([y_train, y_valid], axis=0)
 
 xgbc.fit(X_train, y_train)
-final_preds = xgbc.predict(X_test)
-
-print(recall_score(y_test, final_preds))
-
-pickle.dump(xgbc, open('xgbc_model.pkl', 'wb'))
+# final_preds = xgbc.predict(X_test)
+# print(final_preds.columns)
+# #
+# # print(recall_score(y_test, final_preds))
+# #
+dirr = '/Users/vanamsid/Deployment-flask/'
+xgbc.save_model(dirr + 'xgbc_model.json')
