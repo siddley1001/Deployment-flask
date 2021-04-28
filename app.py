@@ -1,6 +1,7 @@
 import numpy as np
+import pandas as pd
 from flask import Flask, request, render_template
-from xgboost import XGBClassifier, Booster
+from xgboost import XGBClassifier, Booster, DMatrix
 
 bst = Booster()
 
@@ -19,24 +20,15 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
     """For rendering results on HTML GUI"""
-    inputs = []
-    for x in request.form.values():
-        if x == 'Y':
-            x = 1
-            # inputs.append(x)
-        elif x == 'N':
-            x = 0
-            # inputs.append(x)
-        else:
-            x = float(x)
-            # inputs.append(x)
     inputs = [x for x in request.form.values()]
-    inputs = np.array(inputs)
-    # final_inputs = [np.array(inputs)]
-    output = model.predict(inputs)
 
-    # output = np.array(output)
-    # output = np.array(float(output))
+    transformer = {'Y': 1,
+                   'N': 0}
+    inputs = [transformer.get(key,0) for key in inputs]
+
+    inputs = np.array(inputs).reshape((1,-1))
+
+    output = model.predict(inputs)
 
     if output == 1:
         return render_template('index.html', prediction_text='Individual WILL have a stroke'
@@ -50,7 +42,7 @@ def predict():
                                                              'accuracy')
 
 # @app.route('/predict_api', methods=['POST'])
-# def predict_api():
+# def predict_api():                                                                                           Stroke Prediction with XGBoost
 #     """For direct API calls through request"""
 #     data = request.get_json(force=True)
 #     prediction = model.predict([np.array(list(data.values()))])
