@@ -1,4 +1,5 @@
 import numpy as np
+import os
 from flask import Flask, request, render_template
 from xgboost import XGBClassifier, Booster
 
@@ -8,6 +9,9 @@ app = Flask(__name__)
 model = XGBClassifier()
 dirr = '/Users/vanamsid/Deployment-flask/'
 model.load_model(dirr + 'xgbc_model.json')
+
+port = int(os.environ.get('PORT', 5000))
+
 
 @app.route('/')
 def home():
@@ -39,4 +43,4 @@ def predict():
                                                              'accuracy')
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=port, debug=True)
