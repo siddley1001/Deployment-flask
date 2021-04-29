@@ -63,7 +63,7 @@ X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=
 
 searched_params = {'subsample': 0.8, 'min_child_weight': 1, 'max_depth': 7, 'learning_rate': 0.25,
                    'grow_policy': 'lossguide', 'gamma': 1.5, 'colsample_bytree': 0.6}
-xgbc = XGBClassifier(**searched_params)
+xgbc = XGBClassifier(**searched_params, use_label_encoder=False)
 
 X_train = np.concatenate([X_train, X_valid], axis=0)
 y_train = np.concatenate([y_train, y_valid], axis=0)
@@ -74,5 +74,5 @@ xgbc.fit(X_train, y_train)
 # #
 # # print(recall_score(y_test, final_preds))
 # #
-dirr = '/Users/vanamsid/Deployment-flask/'
-xgbc.save_model(dirr + 'xgbc_model.json')
+dirr = '/Users/vanamsid/Deployment-flask/xgbc_model.json'
+xgbc.save_model(dirr)

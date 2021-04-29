@@ -1,7 +1,6 @@
 import numpy as np
-import pandas as pd
 from flask import Flask, request, render_template
-from xgboost import XGBClassifier, Booster, DMatrix
+from xgboost import XGBClassifier, Booster
 
 bst = Booster()
 
@@ -9,8 +8,6 @@ app = Flask(__name__)
 model = XGBClassifier()
 dirr = '/Users/vanamsid/Deployment-flask/'
 model.load_model(dirr + 'xgbc_model.json')
-
-
 
 @app.route('/')
 def home():
@@ -40,16 +37,6 @@ def predict():
                                                              '\n Note that the following model predicts strokes with '
                                                              '96% '
                                                              'accuracy')
-
-# @app.route('/predict_api', methods=['POST'])
-# def predict_api():                                                                                           Stroke Prediction with XGBoost
-#     """For direct API calls through request"""
-#     data = request.get_json(force=True)
-#     prediction = model.predict([np.array(list(data.values()))])
-#
-#     output = prediction[0]
-#     return jsonify(output)
-
 
 if __name__ == "__main__":
     app.run(debug=True)
